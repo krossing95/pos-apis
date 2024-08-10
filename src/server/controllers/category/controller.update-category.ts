@@ -1,12 +1,10 @@
 import { Request, Response } from "express"
-import { connectToDB } from "../../config/config.db"
 import { updateCategoryParams } from "../../types/types.category"
 import Category from "../../models/model.category"
 import { parseApiResults } from "../../helpers/helper.index"
 
 const UpdateCategory = async (req: Request, res: Response) => {
   try {
-    connectToDB()
     const payload: updateCategoryParams = req.body
     // Find the category by its ID
     const category = await Category.findOne({ _id: payload.categoryId })

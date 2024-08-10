@@ -1,12 +1,9 @@
 import { Request, Response } from "express"
-import { connectToDB } from "../../config/config.db"
 import Category from "../../models/model.category"
 import { parseApiResults } from "../../helpers/helper.index"
 
 const DeleteCategory = async (req: Request, res: Response) => {
   try {
-    connectToDB()
-
     const paylaod: { categoryId: string } = req.body
 
     // Find the category by its unique id

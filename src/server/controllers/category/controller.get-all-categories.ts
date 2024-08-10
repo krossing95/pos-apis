@@ -1,5 +1,4 @@
 import { Request, Response } from "express"
-import { connectToDB } from "../../config/config.db"
 import {
   CategoryType,
   fetchAllCategoriesParams,
@@ -45,7 +44,6 @@ const offsetCalculator = ({
 const GetAllCategories = async (req: Request, res: Response) => {
   try {
     const payload: fetchAllCategoriesParams = req.body
-    connectToDB()
 
     const { skipAmount, query, sortOptions, pageSize } = offsetCalculator({
       ...payload,

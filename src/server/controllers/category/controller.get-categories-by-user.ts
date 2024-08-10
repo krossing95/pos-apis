@@ -3,7 +3,6 @@ import {
   CategoryType,
   fetchCategoriesByUserParams,
 } from "../../types/types.category"
-import { connectToDB } from "../../config/config.db"
 import User from "../../models/model.user"
 import { FilterQuery } from "mongoose"
 import Category from "../../models/model.category"
@@ -46,7 +45,6 @@ const offsetCalculator = ({
 
 const GetCategoriesByUser = async (req: Request, res: Response) => {
   try {
-    connectToDB()
     const payload: fetchCategoriesByUserParams = req.body
     // Find the user by the provided email
     const user = await User.findOne({ email: payload.email })

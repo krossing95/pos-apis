@@ -1,5 +1,4 @@
 import { Request, Response } from "express"
-import { connectToDB } from "../../config/config.db"
 import { createOrganizationParams } from "../../types/types.organization"
 import User from "../../models/model.user"
 import Organization from "../../models/model.organization"
@@ -7,7 +6,6 @@ import { parseApiResults } from "../../helpers/helper.index"
 
 const CreateOrganization = async (req: Request, res: Response) => {
   try {
-    connectToDB()
     const payload: createOrganizationParams = req.body
     // Find the user with the provided unique id
     const user = await User.findOne({ _id: payload.createdById })

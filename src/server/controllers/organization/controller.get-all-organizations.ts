@@ -1,5 +1,4 @@
 import { Request, Response } from "express"
-import { connectToDB } from "../../config/config.db"
 import {
   fetchAllOrganizationsParams,
   Organization as OrganizationType,
@@ -43,8 +42,6 @@ const offsetCalculator = ({
 
 const GetAllOrganizations = async (req: Request, res: Response) => {
   try {
-    connectToDB()
-
     const payload: fetchAllOrganizationsParams = req.body
 
     const { query, sortOptions, skipAmount, pageSize } = offsetCalculator({

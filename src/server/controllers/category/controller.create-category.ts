@@ -1,4 +1,3 @@
-import { connectToDB } from "../../config/config.db"
 import User from "../../models/model.user"
 import Category from "../../models/model.category"
 import { parseApiResults } from "../../helpers/helper.index"
@@ -8,7 +7,6 @@ import { Request, Response } from "express"
 const CreateCategory = async (req: Request, res: Response) => {
   try {
     const payload: createCategoryParams = req.body
-    connectToDB()
     // Find the user with the provided unique id
     const user = await User.findOne({ _id: payload.createdById })
     if (!user)

@@ -1,5 +1,4 @@
 import { Request, Response } from "express"
-import { connectToDB } from "../../config/config.db"
 import User from "../../models/model.user"
 import {
   fetchOrganizationsByUserParams,
@@ -46,7 +45,6 @@ const offsetCalculator = ({
 
 const GetUserOrganizations = async (req: Request, res: Response) => {
   try {
-    connectToDB()
     const payload: fetchOrganizationsByUserParams = req.body
     // Find the user with the provided unique email
     const user = await User.findOne({ email: payload.email })

@@ -5,14 +5,19 @@ import GetAllCategories from "../controllers/category/controller.get-all-categor
 import GetCategoriesByUser from "../controllers/category/controller.get-categories-by-user"
 import GetOrganizationalCategories from "../controllers/category/controller.get-organizational-categories"
 import UpdateCategory from "../controllers/category/controller.update-category"
+import Middleware from "../middlewares/middleware.app"
 
 const categoryRouter = express.Router()
 
-categoryRouter.post("/", CreateCategory)
-categoryRouter.delete("/", DeleteCategory)
-categoryRouter.get("/get-all", GetAllCategories)
-categoryRouter.get("/get-by-user", GetCategoriesByUser)
-categoryRouter.get("/get-by-organization", GetOrganizationalCategories)
-categoryRouter.patch("/", UpdateCategory)
+categoryRouter.post("/", Middleware, CreateCategory)
+categoryRouter.delete("/", Middleware, DeleteCategory)
+categoryRouter.get("/get-all", Middleware, GetAllCategories)
+categoryRouter.get("/get-by-user", Middleware, GetCategoriesByUser)
+categoryRouter.get(
+  "/get-by-organization",
+  Middleware,
+  GetOrganizationalCategories
+)
+categoryRouter.patch("/", Middleware, UpdateCategory)
 
 export default categoryRouter

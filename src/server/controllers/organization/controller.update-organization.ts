@@ -1,12 +1,10 @@
 import { Request, Response } from "express"
-import { connectToDB } from "../../config/config.db"
 import { createOrganizationParams } from "../../types/types.organization"
 import Organization from "../../models/model.organization"
 import { parseApiResults } from "../../helpers/helper.index"
 
 const UpdateOrganization = async (req: Request, res: Response) => {
   try {
-    connectToDB()
     const payload: createOrganizationParams = req.body
     // Find the organization by its _id and update the information
     const updatedOrganization = await Organization.findOneAndUpdate(

@@ -1,5 +1,4 @@
 import { Request, Response } from "express"
-import { connectToDB } from "../../config/config.db"
 import User from "../../models/model.user"
 import Organization from "../../models/model.organization"
 import { defaultGetQuery } from "../../utils/utils.index"
@@ -7,7 +6,6 @@ import { parseApiResults } from "../../helpers/helper.index"
 
 const SetActiveOrganization = async (req: Request, res: Response) => {
   try {
-    connectToDB()
     const payload: { userId: string; organizationId: string } = req.body
     const [user, organization] = await Promise.all([
       User.findOne({ _id: payload.userId }),

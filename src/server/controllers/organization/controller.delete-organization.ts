@@ -1,11 +1,9 @@
 import { Request, Response } from "express"
-import { connectToDB } from "../../config/config.db"
 import Organization from "../../models/model.organization"
 import { parseApiResults } from "../../helpers/helper.index"
 
 const DeleteOrganization = async (req: Request, res: Response) => {
   try {
-    connectToDB()
     const payload: { organizationId: string } = req.body
     // Find the organization by its ID and delete it
     const deletedOrganization = await Organization.findByIdAndUpdate(
