@@ -1,0 +1,20 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const controller_create_category_1 = __importDefault(require("../controllers/category/controller.create-category"));
+const controller_delete_category_1 = __importDefault(require("../controllers/category/controller.delete-category"));
+const controller_get_all_categories_1 = __importDefault(require("../controllers/category/controller.get-all-categories"));
+const controller_get_categories_by_user_1 = __importDefault(require("../controllers/category/controller.get-categories-by-user"));
+const controller_get_organizational_categories_1 = __importDefault(require("../controllers/category/controller.get-organizational-categories"));
+const controller_update_category_1 = __importDefault(require("../controllers/category/controller.update-category"));
+const categoryRouter = express_1.default.Router();
+categoryRouter.post("/", controller_create_category_1.default);
+categoryRouter.delete("/", controller_delete_category_1.default);
+categoryRouter.get("/get-all", controller_get_all_categories_1.default);
+categoryRouter.get("/get-by-user", controller_get_categories_by_user_1.default);
+categoryRouter.get("/get-by-organization", controller_get_organizational_categories_1.default);
+categoryRouter.patch("/", controller_update_category_1.default);
+exports.default = categoryRouter;

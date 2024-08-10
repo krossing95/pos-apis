@@ -1,0 +1,20 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const controller_create_organization_1 = __importDefault(require("../controllers/organization/controller.create-organization"));
+const controller_delete_organization_1 = __importDefault(require("../controllers/organization/controller.delete-organization"));
+const controller_get_all_organizations_1 = __importDefault(require("../controllers/organization/controller.get-all-organizations"));
+const controller_get_user_organizations_1 = __importDefault(require("../controllers/organization/controller.get-user-organizations"));
+const controller_update_organization_1 = __importDefault(require("../controllers/organization/controller.update-organization"));
+const controller_set_active_organization_1 = __importDefault(require("../controllers/organization/controller.set-active-organization"));
+const organizationRouter = express_1.default.Router();
+organizationRouter.post("/", controller_create_organization_1.default);
+organizationRouter.delete("/", controller_delete_organization_1.default);
+organizationRouter.get("/get-all", controller_get_all_organizations_1.default);
+organizationRouter.get("/by-user", controller_get_user_organizations_1.default);
+organizationRouter.patch("/", controller_update_organization_1.default);
+organizationRouter.patch("/activate", controller_set_active_organization_1.default);
+exports.default = organizationRouter;
