@@ -1,5 +1,4 @@
 import { Request, Response } from "express"
-import { connectToDB } from "../../config/config.db"
 import { createProductParams } from "../../types/types.product"
 import User from "../../models/model.user"
 import Category from "../../models/model.category"
@@ -9,7 +8,6 @@ import { parseApiResults } from "../../helpers/helper.index"
 
 const CreateProduct = async (req: Request, res: Response) => {
   try {
-    connectToDB()
     const payload: createProductParams = req.body
     // Find the user and category concurrently with the provided unique id
 

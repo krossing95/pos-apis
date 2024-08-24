@@ -5,6 +5,7 @@ import cors from "cors"
 import { createServer } from "http"
 import categoryRouter from "./src/server/routers/router.category"
 import organizationRouter from "./src/server/routers/router.organization"
+import productsRouter from "./src/server/routers/router.product"
 
 const app = express()
 dotenv.config()
@@ -22,10 +23,12 @@ app.use(express.json({ limit: "1mb" }))
 app.get("/", (req, res) => {
   return res.send("pos app")
 })
+
 // Routers
 
 app.use("/api/categories", categoryRouter)
 app.use("/api/organizations", organizationRouter)
+app.use("/api/products", productsRouter)
 
 const server = createServer(app)
 server.listen(PORT, () => console.log(`Service is running on port ${PORT}`))
