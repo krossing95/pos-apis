@@ -10,6 +10,7 @@ const cors_1 = __importDefault(require("cors"));
 const http_1 = require("http");
 const router_category_1 = __importDefault(require("./src/server/routers/router.category"));
 const router_organization_1 = __importDefault(require("./src/server/routers/router.organization"));
+const router_product_1 = __importDefault(require("./src/server/routers/router.product"));
 const app = (0, express_1.default)();
 dotenv_1.default.config();
 const PORT = process.env.PORT || process.env.POS_PORT;
@@ -26,5 +27,6 @@ app.get("/", (req, res) => {
 // Routers
 app.use("/api/categories", router_category_1.default);
 app.use("/api/organizations", router_organization_1.default);
+app.use("/api/products", router_product_1.default);
 const server = (0, http_1.createServer)(app);
 server.listen(PORT, () => console.log(`Service is running on port ${PORT}`));

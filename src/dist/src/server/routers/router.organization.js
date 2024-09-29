@@ -10,11 +10,12 @@ const controller_get_all_organizations_1 = __importDefault(require("../controlle
 const controller_get_user_organizations_1 = __importDefault(require("../controllers/organization/controller.get-user-organizations"));
 const controller_update_organization_1 = __importDefault(require("../controllers/organization/controller.update-organization"));
 const controller_set_active_organization_1 = __importDefault(require("../controllers/organization/controller.set-active-organization"));
+const middleware_app_1 = __importDefault(require("../middlewares/middleware.app"));
 const organizationRouter = express_1.default.Router();
-organizationRouter.post("/", controller_create_organization_1.default);
-organizationRouter.delete("/", controller_delete_organization_1.default);
-organizationRouter.get("/get-all", controller_get_all_organizations_1.default);
-organizationRouter.get("/by-user", controller_get_user_organizations_1.default);
-organizationRouter.patch("/", controller_update_organization_1.default);
-organizationRouter.patch("/activate", controller_set_active_organization_1.default);
+organizationRouter.post("/", middleware_app_1.default, controller_create_organization_1.default);
+organizationRouter.delete("/", middleware_app_1.default, controller_delete_organization_1.default);
+organizationRouter.get("/get-all", middleware_app_1.default, controller_get_all_organizations_1.default);
+organizationRouter.get("/by-user", middleware_app_1.default, controller_get_user_organizations_1.default);
+organizationRouter.patch("/", middleware_app_1.default, controller_update_organization_1.default);
+organizationRouter.patch("/activate", middleware_app_1.default, controller_set_active_organization_1.default);
 exports.default = organizationRouter;

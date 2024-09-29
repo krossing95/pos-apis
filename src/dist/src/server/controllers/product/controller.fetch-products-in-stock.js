@@ -12,62 +12,69 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const config_db_1 = require("../../config/config.db");
 const model_user_1 = __importDefault(require("../../models/model.user"));
 const model_organization_1 = __importDefault(require("../../models/model.organization"));
 const utils_index_1 = require("../../utils/utils.index");
+const model_product_1 = __importDefault(require("../../models/model.product"));
 const helper_index_1 = require("../../helpers/helper.index");
-const offsetCalculator = ({ pageNumber = 1, pageSize = 20, sortBy = "desc", searchString = "", }) => {
-    // Calculate the number of organizations to skip based on the page number and page size.
+const offsetCalculator = ({ organizationId, searchString = "", pageNumber = 1, pageSize = 10, sortBy = "createdAt", sortOrder = "desc", }) => {
     const skipAmount = (pageNumber - 1) * pageSize;
-    // Create a case-insensitive regular expression for the provided search string.
     const regex = new RegExp(searchString, "i");
-    // Create an initial query object to filter organizations.
-    const query = Object.assign({}, utils_index_1.defaultGetQuery);
-    // If the search string is not empty, add the $or operator to match either username or name fields.
+    const query = Object.assign({ organization: organizationId, quantity: { $gt: 0 } }, utils_index_1.defaultGetActiveProductsQuery);
+    // If the search string is not empty, add the $or operator to match either name or genericName fields.
     if (searchString.trim() !== "") {
-        query.$or = [{ username: { $regex: regex } }, { name: { $regex: regex } }];
+        query.$or = [
+            { name: { $regex: regex } },
+            { genericName: { $regex: regex } },
+        ];
     }
-    // Define the sort options for the fetched organizations based on createdAt field and provided sort order.
-    const sortOptions = { createdAt: sortBy };
+    const sortOptions = { [sortBy]: sortOrder };
     return {
         skipAmount,
-        pageSize,
         query,
         sortOptions,
-        pageNumber,
+        pageSize,
     };
 };
-const GetUserOrganizations = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const FetchProductsInStock = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const payload = req.body;
-        // Find the user with the provided unique email
+        (0, config_db_1.connectToDB)();
+        // Find the user with the provided email
         const user = yield model_user_1.default.findOne({ email: payload.email });
         if (!user)
             return res
                 .status(412)
                 .json({ message: "User not found", code: "412", data: {} });
-        const { sortOptions, query, skipAmount, pageSize, pageNumber } = offsetCalculator(Object.assign({}, payload));
-        // query the user's organizations by fecthing the organization ids in the user model
-        const results = (yield model_organization_1.default.find(Object.assign({ createdBy: user._id.toString() }, utils_index_1.defaultGetQuery))
+        // Find the organization with the provided unique id
+        const organization = yield model_organization_1.default.findOne({
+            _id: payload.organizationId,
+        });
+        if (!organization)
+            return res
+                .status(412)
+                .json({ message: "Organization not found", code: "412", data: {} });
+        const { pageSize, query, skipAmount, sortOptions } = offsetCalculator(Object.assign({}, payload));
+        const productsQuery = model_product_1.default.find(query)
             .sort(sortOptions)
             .skip(skipAmount)
-            .limit(pageSize));
-        // Count the total number of organizations that match the search criteria (without pagination).
-        const totalOrganizationsCount = yield model_organization_1.default.find({
-            createdBy: user._id.toString(),
-        }).countDocuments(query);
-        // Check if there are more organizations beyond the current page.
-        const isNext = totalOrganizationsCount > skipAmount + results.length;
-        const totalPages = Math.ceil(totalOrganizationsCount / pageSize);
+            .limit(pageSize);
+        // Count the total number of products that match the search criteria (without pagination).
+        const totalProductsCount = yield model_product_1.default.countDocuments(query);
+        const results = yield productsQuery.exec();
+        // Check if there are more products beyond the current page.
+        const isNext = totalProductsCount > skipAmount + results.length;
+        const totalPages = Math.ceil(totalProductsCount / pageSize);
         return res.status(200).json({
             message: "",
             code: "200",
             data: Object.assign({}, (0, helper_index_1.parseApiResults)({
                 results,
                 isNext,
-                total: totalOrganizationsCount,
+                total: totalProductsCount,
                 pageSize,
-                pageNumber,
+                pageNumber: payload.pageNumber,
                 totalPages,
             })),
         });
@@ -80,4 +87,4 @@ const GetUserOrganizations = (req, res) => __awaiter(void 0, void 0, void 0, fun
         });
     }
 });
-exports.default = GetUserOrganizations;
+exports.default = FetchProductsInStock;

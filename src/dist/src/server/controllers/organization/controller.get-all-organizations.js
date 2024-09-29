@@ -12,7 +12,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const config_db_1 = require("../../config/config.db");
 const utils_index_1 = require("../../utils/utils.index");
 const model_organization_1 = __importDefault(require("../../models/model.organization"));
 const offsetCalculator = ({ pageNumber = 1, pageSize = 20, sortBy = "desc", searchString = "", }) => {
@@ -37,7 +36,6 @@ const offsetCalculator = ({ pageNumber = 1, pageSize = 20, sortBy = "desc", sear
 };
 const GetAllOrganizations = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        (0, config_db_1.connectToDB)();
         const payload = req.body;
         const { query, sortOptions, skipAmount, pageSize } = offsetCalculator(Object.assign({}, payload));
         // Create a query to fetch the organizations based on the search and sort criteria.

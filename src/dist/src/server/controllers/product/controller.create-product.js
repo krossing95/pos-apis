@@ -12,7 +12,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const config_db_1 = require("../../config/config.db");
 const model_user_1 = __importDefault(require("../../models/model.user"));
 const model_category_1 = __importDefault(require("../../models/model.category"));
 const model_product_1 = __importDefault(require("../../models/model.product"));
@@ -20,7 +19,6 @@ const model_organization_1 = __importDefault(require("../../models/model.organiz
 const helper_index_1 = require("../../helpers/helper.index");
 const CreateProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        (0, config_db_1.connectToDB)();
         const payload = req.body;
         // Find the user and category concurrently with the provided unique id
         const [user, category] = yield Promise.all([

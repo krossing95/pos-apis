@@ -12,10 +12,10 @@ const controller_get_organizational_categories_1 = __importDefault(require("../c
 const controller_update_category_1 = __importDefault(require("../controllers/category/controller.update-category"));
 const middleware_app_1 = __importDefault(require("../middlewares/middleware.app"));
 const categoryRouter = express_1.default.Router();
-categoryRouter.post("/", controller_create_category_1.default);
-categoryRouter.delete("/", controller_delete_category_1.default);
+categoryRouter.post("/", middleware_app_1.default, controller_create_category_1.default);
+categoryRouter.delete("/", middleware_app_1.default, controller_delete_category_1.default);
 categoryRouter.get("/get-all", middleware_app_1.default, controller_get_all_categories_1.default);
-categoryRouter.get("/get-by-user", controller_get_categories_by_user_1.default);
-categoryRouter.get("/get-by-organization", controller_get_organizational_categories_1.default);
-categoryRouter.patch("/", controller_update_category_1.default);
+categoryRouter.get("/get-by-user", middleware_app_1.default, controller_get_categories_by_user_1.default);
+categoryRouter.get("/get-by-organization", middleware_app_1.default, controller_get_organizational_categories_1.default);
+categoryRouter.patch("/", middleware_app_1.default, controller_update_category_1.default);
 exports.default = categoryRouter;

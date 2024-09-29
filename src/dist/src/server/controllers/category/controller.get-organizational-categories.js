@@ -12,7 +12,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const config_db_1 = require("../../config/config.db");
 const model_category_1 = __importDefault(require("../../models/model.category"));
 const utils_index_1 = require("../../utils/utils.index");
 const helper_index_1 = require("../../helpers/helper.index");
@@ -38,7 +37,6 @@ const offsetCalculator = ({ pageNumber = 1, pageSize = 20, searchString = "", or
 };
 const GetOrganizationalCategories = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        (0, config_db_1.connectToDB)();
         const payload = req.body;
         const { sortOptions, skipAmount, query, pageSize } = offsetCalculator(Object.assign({}, payload));
         // Create a query to fetch the categories based on the search and sort criteria.

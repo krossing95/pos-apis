@@ -12,12 +12,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const config_db_1 = require("../../config/config.db");
 const model_organization_1 = __importDefault(require("../../models/model.organization"));
 const helper_index_1 = require("../../helpers/helper.index");
 const DeleteOrganization = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        (0, config_db_1.connectToDB)();
         const payload = req.body;
         // Find the organization by its ID and delete it
         const deletedOrganization = yield model_organization_1.default.findByIdAndUpdate(payload.organizationId, { isDeleted: true });
