@@ -1,0 +1,27 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const middleware_app_1 = __importDefault(require("../middlewares/middleware.app"));
+const controller_create_sale_1 = __importDefault(require("../controllers/sale/controller.create-sale"));
+const controller_get_sale_by_id_1 = __importDefault(require("../controllers/sale/controller.get-sale-by-id"));
+const controller_get_organizational_sales_1 = __importDefault(require("../controllers/sale/controller.get-organizational-sales"));
+const controller_pay_for_sale_1 = __importDefault(require("../controllers/sale/controller.pay-for-sale"));
+const controller_delete_sale_1 = __importDefault(require("../controllers/sale/controller.delete-sale"));
+const controller_get_analytics_1 = __importDefault(require("../controllers/sale/controller.get-analytics"));
+const controller_get_most_sold_products_1 = __importDefault(require("../controllers/sale/controller.get-most-sold-products"));
+const controller_least_sold_products_1 = __importDefault(require("../controllers/sale/controller.least-sold-products"));
+const controller_delete_sales_1 = __importDefault(require("../controllers/sale/controller.delete-sales"));
+const salesRouter = express_1.default.Router();
+salesRouter.post("/create-sale", middleware_app_1.default, controller_create_sale_1.default);
+salesRouter.get("/get-sale-by-id", middleware_app_1.default, controller_get_sale_by_id_1.default);
+salesRouter.get("/get-organizational-sale", middleware_app_1.default, controller_get_organizational_sales_1.default);
+salesRouter.get("/pay-for-sale", middleware_app_1.default, controller_pay_for_sale_1.default);
+salesRouter.delete("/delete-sale", middleware_app_1.default, controller_delete_sale_1.default);
+salesRouter.delete("/delete-all-sales", middleware_app_1.default, controller_delete_sales_1.default);
+salesRouter.get("/get-analytics", middleware_app_1.default, controller_get_analytics_1.default);
+salesRouter.get("/get-most-sold-products", middleware_app_1.default, controller_get_most_sold_products_1.default);
+salesRouter.get("/get-least-sold-products", middleware_app_1.default, controller_least_sold_products_1.default);
+exports.default = salesRouter;

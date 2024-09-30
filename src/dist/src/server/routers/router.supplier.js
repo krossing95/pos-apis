@@ -1,0 +1,21 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const middleware_app_1 = __importDefault(require("../middlewares/middleware.app"));
+const controller_create_supplier_1 = __importDefault(require("../controllers/suppliers/controller.create-supplier"));
+const controller_get_all_suppliers_1 = __importDefault(require("../controllers/suppliers/controller.get-all-suppliers"));
+const controller_get_suppliers_by_user_1 = __importDefault(require("../controllers/suppliers/controller.get-suppliers-by-user"));
+const controller_get_organizational_suppliers_1 = __importDefault(require("../controllers/suppliers/controller.get-organizational-suppliers"));
+const controller_update_supplier_1 = __importDefault(require("../controllers/suppliers/controller.update-supplier"));
+const controller_delete_supplier_1 = __importDefault(require("../controllers/suppliers/controller.delete-supplier"));
+const supplierRouter = express_1.default.Router();
+supplierRouter.post("/create-supplier", middleware_app_1.default, controller_create_supplier_1.default);
+supplierRouter.get("/get-all-suppliers", middleware_app_1.default, controller_get_all_suppliers_1.default);
+supplierRouter.get("/get-suppliers-by-user", middleware_app_1.default, controller_get_suppliers_by_user_1.default);
+supplierRouter.get("/get-suppliers-by-organization", middleware_app_1.default, controller_get_organizational_suppliers_1.default);
+supplierRouter.patch("/update-supplier", middleware_app_1.default, controller_update_supplier_1.default);
+supplierRouter.delete("/delete-supplier", middleware_app_1.default, controller_delete_supplier_1.default);
+exports.default = supplierRouter;

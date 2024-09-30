@@ -6,6 +6,10 @@ import { createServer } from "http"
 import categoryRouter from "./src/server/routers/router.category"
 import organizationRouter from "./src/server/routers/router.organization"
 import productsRouter from "./src/server/routers/router.product"
+import salesRouter from "./src/server/routers/router.sale"
+import stockRouter from "./src/server/routers/router.stock"
+import supplierRouter from "./src/server/routers/router.supplier"
+import userRouter from "./src/server/routers/router.user"
 
 const app = express()
 dotenv.config()
@@ -29,6 +33,10 @@ app.get("/", (req, res) => {
 app.use("/api/categories", categoryRouter)
 app.use("/api/organizations", organizationRouter)
 app.use("/api/products", productsRouter)
+app.use("/api/sales", salesRouter)
+app.use("/api/stocks", stockRouter)
+app.use("/api/suppliers", supplierRouter)
+app.use("/api/users", userRouter)
 
 const server = createServer(app)
 server.listen(PORT, () => console.log(`Service is running on port ${PORT}`))

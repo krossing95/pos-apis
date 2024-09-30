@@ -3,12 +3,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const config_db_1 = require("../config/config.db");
 const Middleware = (req, res, next) => {
     const appKey = process.env.POS_APP_KEY;
-    const receivedAppKey = req.headers.authorization;
-    if (!appKey || !receivedAppKey)
+    const receivedApiKey = req.headers["api-key"];
+    if (!appKey || !receivedApiKey)
         return res
             .status(401)
             .json({ message: "Unauthorized", code: "401", data: {} });
-    if (appKey !== receivedAppKey)
+    if (appKey !== receivedApiKey)
         return res
             .status(401)
             .json({ message: "Unauthorized", code: "401", data: {} });
